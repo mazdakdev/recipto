@@ -17,8 +17,8 @@ SECRET_KEY = '(o3^u1lhaeu@lpw_%uotq)hi=*_!y0z+fjr6ka@1^*n#rw1qo('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -31,9 +31,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'core',
+
 ]
 
+SITE_ID = 1
+REST_USE_JWT = True
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -45,10 +54,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+
+ACCOUNT_EMAIL_REQUIRED = False
 ROOT_URLCONF = 'api.urls'
-CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:3000',
-]
+CORS_ALLOW_ALL_ORIGINS = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -96,7 +108,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+REST_FRAMEWORK ={
+    'DEAFULT_AUTHENTICATION_CLASSES':[
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_farmework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -110,7 +128,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
