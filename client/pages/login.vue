@@ -1,39 +1,146 @@
-<!-- pages/login.vue -->
-<!-- This contains the login form. You should also add some custom validation yourself. -->
+
 <template>
-  <div class="login-page">
-   user:
-    <form method="post" @submit.prevent="logInUser">
-      user:
-      <input type="text" v-model="userData.username">
-      email
-      <input type="text" v-model="userData.email">
-      pass
-      <input type="text" v-model="userData.password">
-      <input type="submit" >
-    </form>
-  </div>
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="columns">
+
+        <div class="column is-4 is-offset-4">
+
+          <h2 class="title has-text-centered">Welcome back!</h2>
+
+          <Notification :message="error" v-if="error"/>
+
+          <form method="post" @submit.prevent="login">
+
+            <div class="field">
+
+              <label class="label">Username</label>
+
+              <div class="control">
+
+                <input
+
+                  type="text"
+
+                  class="input"
+
+                  name="email"
+
+                  v-model="email"
+
+                >
+
+              </div>
+
+            </div>
+
+            <div class="field">
+
+              <label class="label">Password</label>
+
+              <div class="control">
+
+                <input
+
+                  type="password"
+
+                  class="input"
+
+                  name="password"
+
+                  v-model="password"
+
+                >
+
+              </div>
+
+            </div>
+
+            <div class="control">
+
+              <button type="submit" class="button is-dark is-fullwidth">Log In</button>
+
+            </div>
+
+          </form>
+
+          <div class="has-text-centered" style="margin-top: 20px">
+
+            <p>
+
+              Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
 </template>
 
 <script>
-import Index from "@/pages/index";
-export default {
-  components: {Index},
-  data: () => ({
-    userData: { email: '', password: '', username:'' },
 
-  }),
-  methods: {
-    async logInUser(userData ) {
-      try {
-        await this.$auth.loginWith('local', {
-          data: userData,
-        })
-        console.log('notification successful')
-      } catch (error) {
-        console.log(error)
-      }
-    },
+
+
+export default {
+
+
+
+  data() {
+
+    return {
+
+      email: '',
+
+      password: '',
+
+      error: null
+
+    }
+
   },
+
+  methods: {
+
+    async login() {
+
+      try {
+
+        await this.$auth.loginWith('local', {
+ middleware: 'guest',
+          data: {
+
+            username: this.email,
+
+            password: this.password
+
+          }
+
+        })
+
+        this.$router.push('/')
+
+      } catch (e) {
+
+        this.error = e.response
+        console.log(this.error)
+        this.$toast.error(e.response.data.message)
+
+      }
+
+    }
+
+  }
+
 }
+
 </script>

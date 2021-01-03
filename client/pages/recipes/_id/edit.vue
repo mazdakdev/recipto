@@ -60,6 +60,7 @@ export default {
         title: "Edit Recipe"
       }
     },
+   middleware: 'auth',
   async asyncData({ $axios, params }) {
     try {
       let recipe = await $axios.$get(`/recipes/${params.id}`);

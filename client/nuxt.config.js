@@ -8,8 +8,11 @@ export default {
       {hid: 'description', name: 'description', content: ''}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-    ]
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      {rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'}
+
+    ],
+
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -41,24 +44,30 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: 'http://0.0.0.0:8000/api'
+    baseURL: 'http://127.0.0.1:8000/api'
   },
-    auth: {
+  auth: {
+
     strategies: {
+
       local: {
+
         endpoints: {
-          login: { url: '/rest-auth/login/', method: 'post', propertyName: 'token' },
-          user: {
-            url: '/rest-auth/user/',
-            method: 'get',
-            propertyName: false,
-          },
+
+          login: {url: '/token/', method: 'post', propertyName: 'access'},
+
+          user: {url: '/rest-auth/user/', method: 'get', propertyName: false},
 
           logout: false
+
         }
       }
     }
   },
+
+
+
+
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},

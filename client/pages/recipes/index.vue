@@ -29,11 +29,11 @@ export default {
       title: "Recipes list"
     };
   },
-
+ middleware: 'auth',
   components: {
     RecipeCard
   },
-  middleware:'auth',
+
   async asyncData({ $axios, params }) {
     try {
       let recipes = await $axios.$get(`/recipes/`);

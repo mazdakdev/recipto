@@ -71,6 +71,7 @@ export default {
       title: "Add Recipe"
     };
   },
+   middleware: 'auth',
   data() {
     return {
       recipe: {
