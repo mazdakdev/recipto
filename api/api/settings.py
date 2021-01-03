@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from pip._vendor.distro import os_release_attr
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,12 +31,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    'rest_framework_simplejwt',
     'core',
 
 ]
@@ -108,13 +108,53 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-REST_FRAMEWORK ={
-    'DEAFULT_AUTHENTICATION_CLASSES':[
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_farmework.authentication.SessionAuthentication',
-        'knox.auth.TokenAuthentication',
-    ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
 }
+
+from datetime import timedelta
+
+
+
+
+from datetime import timedelta
+
+...
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
