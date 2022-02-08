@@ -10,8 +10,9 @@
  
  note that : This Project was developed just for exercise lots of days ago and now I'm going to make it better with my new skills
  
- 
-TODO: 
+- - - -
+
+# TODO: 
 - [ ] Create better ui
 - [ ] write test cases for app
 - [ ] create thumbnail of pictures and show that 
